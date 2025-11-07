@@ -52,5 +52,5 @@ jobs:
         context: .
         push: true
         tags: |
-          ghcr.io/${{ github.repository_owner }}/alvarez-app:latest
-          ghcr.io/${{ github.repository_owner }}/alvarez-app:${{ github.sha }}
+          ghcr.io/jenn220/jenifer-alvarez:latest
+          ghcr.io/jenn220/jenifer-alvarez:${{ github.sha }}
