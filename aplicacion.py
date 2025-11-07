@@ -7,7 +7,7 @@ app = Flask(__name__)
 def home():
     return '''
     <h1>Hola! Aplicación de Jenifer :#</h1>
-    <p>Esta es mi aplicación para el examen</p>
+    <p>Esta es mi aplicación para la tarea de 07 de Noviembre</p>
     <a href="/suma/5/3">Probar suma: 5 + 3</a><br>
     <a href="/resta/10/4">Probar resta: 10 - 4</a>
     '''
