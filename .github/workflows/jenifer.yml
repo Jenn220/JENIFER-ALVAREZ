@@ -2,9 +2,9 @@ name: CI - Tests Automáticos
 
 on:
   push:
-    branches: [ Alvarez, main ] 
+    branches: [ Jenifer, main ] 
   pull_request:
-    branches: [ Alvarez ]
+    branches: [ Jenifer ]
 
 jobs:
   test:
