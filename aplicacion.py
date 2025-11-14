@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return '''
-    <h1>Hola! Aplicación de Jenifer :3 :3</h1>
+    <h1>Hola! Aplicación de Jenifer :3 :3 :3</h1>
     <p>Esta es mi aplicación para la tarea de 14 de Noviembre</p>
     <a href="/suma/5/3">Probar suma: 5 + 3</a><br>
     <a href="/resta/10/4">Probar resta: 10 - 4</a>
