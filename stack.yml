@@ -9,11 +9,11 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.jenifer-alvarez.entrypoints=http"
-        - "traefik.http.routers.jenifer-alvarez.rule=Host(`jenifer-alvarez.jenn.com`)"
+        - "traefik.http.routers.jenifer-alvarez.rule=Host(`jenifer-alvarez.byronrm.com`)"
         - "traefik.http.middlewares.jenifer-alvarez-https-redirect.redirectscheme.scheme=https"
         - "traefik.http.routers.jenifer-alvarez.middlewares=jenifer-alvarez-https-redirect"
         - "traefik.http.routers.jenifer-alvarez-secure.entrypoints=https"
-        - "traefik.http.routers.jenifer-alvarez-secure.rule=Host(`jenifer-alvarez.jenn.com`)"
+        - "traefik.http.routers.jenifer-alvarez-secure.rule=Host(`jenifer-alvarez.byronrm.com`)"
         - "traefik.http.routers.jenifer-alvarez-secure.tls=true"
         - "traefik.http.routers.jenifer-alvarez-secure.tls.certresolver=http"
         - "traefik.http.routers.jenifer-alvarez-secure.service=jenifer-alvarez"
