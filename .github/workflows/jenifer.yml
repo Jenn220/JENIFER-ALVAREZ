@@ -87,4 +87,8 @@ jobs:
           
           echo "Despliegue completado"
           docker stack deploy --with-registry-auth -c stack.yml jenifer-alvarez
-          dock ps
+          
+          echo "Verificando servicios"
+          docker service ls
+          
+          echo "Despliegue completado"
