@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   jenifer-alvarez:
-    image: jenifer-alvarez:latest
+    image: ghcr.io/jenn220/jenifer-alvarez:latest
     build: .
     deploy:
       replicas: 1
