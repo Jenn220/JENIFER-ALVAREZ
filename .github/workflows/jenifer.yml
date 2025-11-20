@@ -77,11 +77,14 @@ jobs:
           echo "Descargando la imagen desde GitHub Container Registry"
           echo "${{ secrets.GHCR_PATH }}" | docker login ghcr.io -u jenn220 --password-stdin
           docker pull ghcr.io/jenn220/jenifer-alvarez:latest
-          
+
+ 
           echo "Desplegando con Docker Stack"
-          docker stack deploy --with-registry-auth -c stack.yml jenifer-alvarez
+          docker stack rm jenifer-alvarez || true
           
-          echo "Verificando servicios"
-          docker service ls
+          echo "esperar 20 segundos"
+          sleep 20
           
           echo "Despliegue completado"
+          docker stack deploy --with-registry-auth -c stack.yml jenifer-alvarez
+          dock ps
