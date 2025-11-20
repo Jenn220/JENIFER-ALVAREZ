@@ -14,17 +14,17 @@ jobs:
       packages: write
 
     steps:
-    - name:  Checkout código
+    - name: Checkout codigo
       uses: actions/checkout@v3
 
-    - name:  Login to GitHub Container Registry
+    - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name:  Build and push Docker image
+    - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
         context: .
@@ -33,14 +33,14 @@ jobs:
           ghcr.io/jenn220/jenifer-alvarez:latest
           ghcr.io/jenn220/jenifer-alvarez:${{ github.sha }}
 
-    - name: Mostrar variables básicas (solo locales, no secretos)
+    - name: Mostrar variables basicas
       run: |
-        echo "Probando conexión SSH con:"
-        echo "Host: ${{ secrets.VPS_HOST }}"
-        echo "Usuario: ${{ secrets.VPS_USER }}"
-        echo "Puerto: ${{ secrets.VPS_SSH_PORT }}"
+        echo "Probando conexion SSH con:"
+        echo "Host configurado: SI"
+        echo "Usuario configurado: SI"
+        echo "Puerto configurado: SI"
     
-    - name: Probar conexión SSH
+    - name: Probar conexion SSH
       uses: appleboy/ssh-action@v1
       with:
         host: ${{ secrets.VPS_HOST }}
@@ -48,13 +48,13 @@ jobs:
         password: ${{ secrets.VPS_PASSWORD }}
         port: ${{ secrets.VPS_SSH_PORT }}
         script: |
-          echo " Conexión exitosa desde GitHub Actions"
+          echo "Conexion exitosa desde GitHub Actions"
           hostname
           whoami
           uptime
 
-    - name: Copiar stack.yml to VPS (SCP)
-      uses: appleboy/scp-action@v1
+    - name: Copiar stack.yml al servidor
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USER }}
@@ -63,7 +63,6 @@ jobs:
         source: "stack.yml"
         target: "/home/${{ secrets.VPS_USER }}/deploy"
 
-
     - name: Despliegue de servicios
       uses: appleboy/ssh-action@v1
       with:
@@ -71,11 +70,18 @@ jobs:
         username: ${{ secrets.VPS_USER }}
         password: ${{ secrets.VPS_PASSWORD }}
         port: ${{ secrets.VPS_SSH_PORT }}
-        script: 
-         echo "Desplegando servicios"
-         cd "~/deploy"
-
-         echo "Descargando la iamgen desde git"
-         echo "${{ secrets.GHCR_PATH }}" | docker login ghcr.io -u jenn220 --password-stdin
-         docker pull ghcr.io/jenn220/jenifer-alvarez:2b611cd1acbd221c788e98495f3a9af064605ba5
-         
+        script: |
+          echo "Desplegando servicios"
+          cd ~/deploy
+          
+          echo "Descargando la imagen desde GitHub Container Registry"
+          echo "${{ secrets.GHCR_PATH }}" | docker login ghcr.io -u jenn220 --password-stdin
+          docker pull ghcr.io/jenn220/jenifer-alvarez:latest
+          
+          echo "Desplegando con Docker Stack"
+          docker stack deploy --with-registry-auth -c stack.yml jenifer-alvarez
+          
+          echo "Verificando servicios"
+          docker service ls
+          
+          echo "Despliegue completado"
